@@ -1,24 +1,60 @@
 const container = document.getElementById("container");
+// let cell = document.createElement("div");
 
-function makeRows(rows, cols) {
-    container.style.setProperty('--grid-rows', rows);
-    container.style.setProperty('--grid-cols', cols);
+// 
+// CREATE THE INITIAL GRID 16 X 16
+// 
+function createGrid(rows, cols) {
+    container.style.setProperty("--grid-rows", rows);
+    container.style.setProperty("--grid-cols", cols);
 
-    // console.log(container);
-    // console.log(rows);
-    // console.log(cols);
-
-    for (let i = 0; i < (rows * cols); i++) {
-        let cell = document.createElement('div');
-        //cell.innerText = (i + 1);   // Label the cell by numbers || DELETE LATER
-        container.appendChild(cell).className = 'grid-item';
-
-        // When hovering on a "cell" the cell will turn black
-        cell.addEventListener('mouseover', () => {
-            cell.style.backgroundColor = 'black';
-            console.log(cell);
-        })
-    };
+    for (i = 0; i < (rows * cols); i++) {
+        let cell = document.createElement("div");
+        container.appendChild(cell).className = "grid-item";
+      };
 };
 
-makeRows(16,16);
+
+// 
+// Change the color when hover
+// 
+function changeColor(target) {
+    target.style.backgroundColor = 'forestgreen';
+}
+
+container.addEventListener('mouseover', (e) => {
+    target = e.target;
+
+    if (target.matches('div.grid-item')) {
+        changeColor(target);
+    };
+});
+
+
+// 
+// Create a prompt asking for the num of squares for the grid
+// 
+function propmtGrid() {
+    let userInput = prompt('Enter grid size between 1-50', 50);
+    
+    if (userInput >= 1 && userInput <= 50) {
+        createGrid(userInput, userInput);
+    } else {
+        do {
+            userInput = prompt('Invalid size! Enter grid size between 1-50');
+        }
+        while(userInput < 1 || userInput > 50);
+        createGrid(userInput, userInput);
+    }
+}
+
+
+// 
+// Reset the project
+// 
+const reset = document.querySelector('#resetBtn');
+reset.addEventListener('click', () => {
+    window.location.reload();
+});
+
+propmtGrid();
